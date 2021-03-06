@@ -4,11 +4,11 @@ const _ = require("lodash");
 
 // ################## SIGNUP ##################
 exports.signUp = async (req, res, next) => {
-  const { errors } = validateUser(req.body);
-  if (errors)
+  const { error } = validateUser(req.body);
+  if (error)
     return res.status(BAD_REQUEST).send({
       code: BAD_REQUEST,
-      message: errors.details.map((err) => err.message),
+      message: error.details.map((err) => err.message),
     });
 
   const { firstname, lastname, username, email, password, role } = req.body;
