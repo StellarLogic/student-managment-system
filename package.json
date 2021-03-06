@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -17,5 +20,7 @@
     "url": "https://github.com/akdenied/student-managment-system/issues"
   },
   "homepage": "https://github.com/akdenied/student-managment-system#readme",
-  "dependencies": {}
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  }
 }
