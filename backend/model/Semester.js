@@ -12,6 +12,8 @@ const semesterSchema = mongoose.Schema(
       require: true,
     },
     subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "subject" }],
+    teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   },
   {
     timestamps: true,

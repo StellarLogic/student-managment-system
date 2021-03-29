@@ -3,11 +3,13 @@ const {
   getAllBranch,
   addBranch,
 } = require("../../../controller/admin/branch_controller");
+const { getAdminDashboard } = require("../../../controller/admin/dashboard");
 const {
   getAllSemester,
   addSemester,
   addSubjectToSem,
   getSingleSemester,
+  addUserToSem,
 } = require("../../../controller/admin/semester_controller");
 const {
   addSubject,
@@ -19,6 +21,9 @@ const {
   activateUser,
 } = require("../../../controller/admin/user_controller");
 const router = express.Router();
+
+// ################## DASHBOARD ROUTE ##################
+router.get("/dashboard", getAdminDashboard);
 
 // ################## USER ROUTE ##################
 router.get("/users/role", getUsersByRole);
@@ -38,5 +43,6 @@ router.get("/semester", getAllSemester);
 router.post("/semester", addSemester);
 router.put("/semester/:id", addSubjectToSem);
 router.get("/semester/:id", getSingleSemester);
+router.put("/semester/user/:id", addUserToSem);
 
 module.exports = router;

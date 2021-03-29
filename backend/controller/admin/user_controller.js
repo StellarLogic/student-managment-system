@@ -1,16 +1,9 @@
 const { BAD_REQUEST, OK } = require("http-status");
 const { User } = require("../../model/User");
 
-// ################## GET USER BY ROLE ##################
-exports.getUsersByRole = async (req, res, next) => {
-  const { type } = req.query;
-  if (type == "admin")
-    return res.status(BAD_REQUEST).send({
-      code: BAD_REQUEST,
-      message: ["Not Authorized to access Admin."],
-    });
-
-  let users = await User.find({ role: type });
+// ################## GET ALL USER ##################
+exports.getAllUsers = async (req, res, next) => {
+  let users = await User.find({ role: { $ne: "admin" } }).sort("createdAt");
 
   if (!users)
     return res.status(BAD_REQUEST).send({
@@ -25,9 +18,16 @@ exports.getUsersByRole = async (req, res, next) => {
   });
 };
 
-// ################## GET ALL USER ##################
-exports.getAllUsers = async (req, res, next) => {
-  let users = await User.find({ role: { $ne: "admin" } }).sort("createdAt");
+// ################## GET USER BY ROLE ##################
+exports.getUsersByRole = async (req, res, next) => {
+  const { type } = req.query;
+  if (type == "admin")
+    return res.status(BAD_REQUEST).send({
+      code: BAD_REQUEST,
+      message: ["Not Authorized to access Admin."],
+    });
+
+  let users = await User.find({ role: type });
 
   if (!users)
     return res.status(BAD_REQUEST).send({

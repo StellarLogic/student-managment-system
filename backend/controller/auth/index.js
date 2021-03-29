@@ -72,7 +72,7 @@ exports.login = async (req, res, next) => {
   if (!user.isActivated)
     return res.status(BAD_REQUEST).send({
       code: BAD_REQUEST,
-      message: ["Acoount not Active, Please Contact Admin."],
+      message: ["Account not Active, Please Contact Admin."],
     });
 
   const token = await user.generateToken();
@@ -88,6 +88,31 @@ exports.login = async (req, res, next) => {
       "isActivated",
     ]),
     token,
-    message: ["Successfully loggedin."],
+    message: ["Successfully LoggedIn."],
+  });
+};
+
+// ################## GET LOGGED USER ##################
+
+exports.getLoggedUser = async (req, res, next) => {
+  let user = await User.findById(req.user.id);
+
+  if (!user)
+    return res.status(BAD_REQUEST).send({
+      code: BAD_REQUEST,
+      message: ["User Doesn't Exist."],
+    });
+
+  return res.status(OK).send({
+    code: OK,
+    data: _.pick(user, [
+      "firstname",
+      "lastname",
+      "username",
+      "email",
+      "role",
+      "isActivated",
+    ]),
+    message: ["Successfully LoggedIn."],
   });
 };

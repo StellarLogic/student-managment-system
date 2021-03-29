@@ -22,5 +22,8 @@
   "homepage": "https://github.com/akdenied/student-managment-system#readme",
   "dependencies": {
     "concurrently": "^6.0.0"
+  },
+  "devDependencies": {
+    "node-sass": "^5.0.0"
   }
 }
