@@ -3,16 +3,16 @@ import { connect, useDispatch } from "react-redux";
 import Loader from "src/views/common/Loader/Loader";
 import "./styles.scss";
 import {
-  getAllTeachers,
+  getAllStudents,
   activateAccount,
-  deleteTeacher,
-} from "src/actions/admin/teachers";
+  deleteStudent,
+} from "src/actions/admin/student";
 
-const AllTeachers = ({ loading, teachers }) => {
+const AllTeachers = ({ loading, students }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllTeachers);
+    dispatch(getAllStudents);
   }, []);
 
   if (loading) return <Loader />;
@@ -32,7 +32,7 @@ const AllTeachers = ({ loading, teachers }) => {
         </tr>
       </thead>
       <tbody>
-        {teachers.map(
+        {students.map(
           (
             {
               _id,
@@ -93,7 +93,7 @@ const AllTeachers = ({ loading, teachers }) => {
                 <button
                   type="button"
                   className="btn btn-pill btn-danger"
-                  onClick={() => dispatch(deleteTeacher(_id))}
+                  onClick={() => dispatch(deleteStudent(_id))}
                 >
                   Delete
                 </button>
@@ -107,8 +107,8 @@ const AllTeachers = ({ loading, teachers }) => {
 };
 
 const mapStateToProps = (state) => ({
-  loading: state.admin.teacher.loading,
-  teachers: state.admin.teacher.data,
+  loading: state.admin.student.loading,
+  students: state.admin.student.data,
 });
 
 export default connect(mapStateToProps)(AllTeachers);

@@ -69,6 +69,7 @@ exports.validateUser = (user) => {
     username: Joi.string().required().label("Username"),
     email: Joi.string().required().label("Email"),
     password: Joi.string().required().label("Password"),
+    role: Joi.string(),
   });
 
   return schema.validate(user, {

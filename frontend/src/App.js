@@ -36,7 +36,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUser);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

@@ -25,19 +25,13 @@ export const loadUser = async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
     try {
-      const res = await Axios.get("/user", {
-        headers: {
-          "x-auth-token": localStorage.token,
-        },
-      });
+      const res = await Axios.get("/user");
       dispatch({
         type: constants.LOAD_USER,
         payload: res.data,
       });
-      res.data.message.map((msg) => toastify(msg, "success"));
     } catch (error) {
       console.log(error);
-      error.response.data.message.map((msg) => toastify(msg, "err"));
       dispatch({
         type: constants.LOGIN_FAIL,
       });

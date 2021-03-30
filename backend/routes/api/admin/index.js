@@ -3,7 +3,9 @@ const {
   getAllBranch,
   addBranch,
 } = require("../../../controller/admin/branch_controller");
-const { getAdminDashboard } = require("../../../controller/admin/dashboard");
+const {
+  getAdminDashboard,
+} = require("../../../controller/admin/dashboard_controller");
 const {
   getAllSemester,
   addSemester,
@@ -19,6 +21,7 @@ const {
   getUsersByRole,
   getAllUsers,
   activateUser,
+  deleteuser,
 } = require("../../../controller/admin/user_controller");
 const router = express.Router();
 
@@ -29,6 +32,7 @@ router.get("/dashboard", getAdminDashboard);
 router.get("/users/role", getUsersByRole);
 router.get("/users", getAllUsers);
 router.put("/user/activate/:id", activateUser);
+router.delete("/user/delete/:id", deleteuser);
 
 // ################## BRANCH ROUTE ##################
 router.get("/branch", getAllBranch);

@@ -7,4 +7,7 @@ export const constants = {
 
 export const adminConstants = {
   GET_DASHBOARD: "GET_DASHBOARD",
+  GET_TEACHERS: "GET_TEACHERS",
+  GET_STUDENTS: "GET_STUDENTS",
+  GET_ROLES: "GET_ROLES",
 };

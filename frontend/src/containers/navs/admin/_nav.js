@@ -14,29 +14,50 @@ const adminNav = [
   },
   {
     _tag: "CSidebarNavDropdown",
+    name: "Role",
+    route: "/roles",
+    icon: "cil-cursor",
+    _children: [
+      {
+        _tag: "CSidebarNavItem",
+        name: "Roles",
+        to: "/roles/list",
+      },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Add Role",
+        to: "/roles/add",
+      },
+    ],
+  },
+  {
+    _tag: "CSidebarNavDropdown",
     name: "Teacher",
     route: "/teacher",
     icon: "cil-cursor",
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "All Teachers",
+        name: "Teachers",
         to: "/teachers/list",
       },
       {
         _tag: "CSidebarNavItem",
-        name: "Brand buttons",
-        to: "/buttons/brand-buttons",
+        name: "Add Teacher",
+        to: "/teachers/add",
       },
+    ],
+  },
+  {
+    _tag: "CSidebarNavDropdown",
+    name: "Student",
+    route: "/students",
+    icon: "cil-cursor",
+    _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Buttons groups",
-        to: "/buttons/button-groups",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Dropdowns",
-        to: "/buttons/button-dropdowns",
+        name: "Students",
+        to: "/students/list",
       },
     ],
   },

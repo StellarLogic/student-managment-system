@@ -4,15 +4,15 @@ import Axios from "src/utils/Axios";
 
 export const getDashboardDetails = async (dispatch) => {
   try {
-    const res = await Axios.post("/admin/dashboard");
+    const res = await Axios.get("/admin/dashboard");
     dispatch({
       type: adminConstants.GET_DASHBOARD,
       payload: {
         loading: false,
-        data: res.data,
+        data: res.data.data,
       },
     });
-    res.data.message.map((msg) => toastify(msg, "success"));
+    // res.data.message.map((msg) => toastify(msg, "success"));
   } catch (error) {
     console.log(error);
     error.response.data.message.map((msg) => toastify(msg, "err"));

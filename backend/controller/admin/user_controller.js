@@ -1,5 +1,6 @@
 const { BAD_REQUEST, OK } = require("http-status");
 const { User } = require("../../model/User");
+const moment = require("moment");
 
 // ################## GET ALL USER ##################
 exports.getAllUsers = async (req, res, next) => {
@@ -27,7 +28,15 @@ exports.getUsersByRole = async (req, res, next) => {
       message: ["Not Authorized to access Admin."],
     });
 
-  let users = await User.find({ role: type });
+  let users = await User.find({ role: type }).select("-__v");
+
+  const formattedUser = users.map((user) => {
+    const createdAt = moment(user.createdAt).format("DD-MM-YYYY");
+    const updatedAt = moment(user.updatedAt).format("DD-MM-YYYY");
+
+    // return { createdAt, updatedAt };
+    return { ...user.toJSON(), createdAt, updatedAt };
+  });
 
   if (!users)
     return res.status(BAD_REQUEST).send({
@@ -37,14 +46,13 @@ exports.getUsersByRole = async (req, res, next) => {
 
   return res.status(OK).send({
     code: OK,
-    data: users,
+    data: formattedUser,
     message: ["List of users."],
   });
 };
 
 // ################## ACTIVATE USERS ##################
 exports.activateUser = async (req, res, next) => {
-  console.log(req.user);
   let user = await User.findById(req.params.id);
 
   if (!user)
@@ -59,6 +67,25 @@ exports.activateUser = async (req, res, next) => {
   return res.status(OK).send({
     code: OK,
     data: user,
-    message: ["User ."],
+    message: [`${user.firstname}'s Account activated Successfully.`],
+  });
+};
+
+// ################## ACTIVATE USERS ##################
+exports.deleteuser = async (req, res, next) => {
+  let user = await User.findById(req.params.id);
+
+  if (!user)
+    return res.status(BAD_REQUEST).send({
+      code: BAD_REQUEST,
+      message: ["No user Found."],
+    });
+
+  await user.remove();
+
+  return res.status(OK).send({
+    code: OK,
+    data: user,
+    message: [`${user.firstname}'s Account Deleted Successfully.`],
   });
 };

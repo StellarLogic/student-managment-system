@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch, connect } from "react-redux";
 import {
   CCreateElement,
   CSidebar,
@@ -19,10 +19,22 @@ import adminNav from "./navs/admin/_nav";
 import teacherNav from "./navs/teacher/_nav";
 import studentNav from "./navs/student/_nav";
 
-const TheSidebar = () => {
+const TheSidebar = ({ role }) => {
+  const [navigation, setnavigation] = useState([]);
   const dispatch = useDispatch();
-  const show = useSelector((state) => state.sidebarShow);
-  let navigation = adminNav;
+  const show = useSelector((state) => state.changeState.sidebarShow);
+
+  useEffect(() => {
+    if (role === "admin") {
+      setnavigation(adminNav);
+    } else if (role === "teacher") {
+      setnavigation(teacherNav);
+    } else if (role === "student") {
+      setnavigation(studentNav);
+    } else {
+      setnavigation([]);
+    }
+  }, [role]);
   return (
     <CSidebar
       show={show}
@@ -56,4 +68,8 @@ const TheSidebar = () => {
   );
 };
 
-export default React.memo(TheSidebar);
+const mapStateToProps = (state) => ({
+  role: state.auth.user.role,
+});
+
+export default connect(mapStateToProps)(React.memo(TheSidebar));

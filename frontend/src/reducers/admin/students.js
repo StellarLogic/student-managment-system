@@ -5,13 +5,13 @@ const inititalState = {
   data: [],
 };
 
-const teacher = (state = inititalState, { type, payload }) => {
+const student = (state = inititalState, { type, payload }) => {
   switch (type) {
-    case adminConstants.GET_TEACHERS:
+    case adminConstants.GET_STUDENTS:
       return { ...state, loading: payload.loading, data: payload.data };
     default:
       return state;
   }
 };
 
-export default teacher;
+export default student;
