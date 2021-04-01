@@ -11,6 +11,13 @@ exports.addRole = async (req, res, next) => {
       code: BAD_REQUEST,
       message: error.details.map((err) => err.message),
     });
+
+  if (req.body.name.toLowerCase() == "admin")
+    return res.status(BAD_REQUEST).send({
+      code: BAD_REQUEST,
+      message: [`You can't add admin as role.`],
+    });
+
   let roles = await Role.find();
   const roleAlreadyPresent = roles.map((role) => role.name == req.body.name);
   console.log("name :>> ", roleAlreadyPresent);
@@ -41,9 +48,11 @@ exports.getRole = async (req, res, next) => {
     createdAt: moment(role.createdAt).format("DD-MM-YYYY"),
   }));
 
+  const filteredRole = formattedRole.filter((role) => role.name !== "admin");
+
   return res.status(OK).send({
     code: OK,
-    data: formattedRole,
+    data: filteredRole,
     message: [`List of roles.`],
   });
 };

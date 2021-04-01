@@ -7,9 +7,11 @@ import {
   activateAccount,
   deleteStudent,
 } from "src/actions/admin/student";
+import { useHistory } from "react-router";
 
 const AllTeachers = ({ loading, students }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getAllStudents);
@@ -32,75 +34,70 @@ const AllTeachers = ({ loading, students }) => {
         </tr>
       </thead>
       <tbody>
-        {students.map(
-          (
-            {
-              _id,
-              firstname,
-              lastname,
-              username,
-              email,
-              createdAt,
-              updatedAt,
-              isActivated,
-            },
-            index
-          ) => (
-            <tr key={_id}>
-              <th scope="row">{index + 1}</th>
-              <td>
-                {firstname} {lastname}
-              </td>
-              <td>{username}</td>
-              <td>{email}</td>
-              <td>{createdAt}</td>
-              <td>{updatedAt}</td>
-              <td>
-                {isActivated ? (
-                  <span className="badge rounded-pill bg-success text-white">
-                    Activated
-                  </span>
-                ) : (
-                  <span className="badge rounded-pill bg-danger text-white">
-                    Not Activated
-                  </span>
-                )}
-              </td>
-              <td>
-                {!isActivated ? (
-                  <button
-                    type="button"
-                    className="btn btn-pill btn-info"
-                    onClick={() => dispatch(activateAccount(_id))}
-                  >
-                    Activate
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-pill btn-danger"
-                    onClick={() => dispatch(activateAccount(_id))}
-                  >
-                    DeActivate
-                  </button>
-                )}
-                <button type="button" className="btn btn-pill btn-primary ml-2">
-                  View
+        {students.map((user, index) => (
+          <tr key={user._id}>
+            <th scope="row">{index + 1}</th>
+            <td>
+              {user.firstname} {user.lastname}
+            </td>
+            <td>{user.username}</td>
+            <td>{user.email}</td>
+            <td>{user.createdAt}</td>
+            <td>{user.updatedAt}</td>
+            <td>
+              {user.isActivated ? (
+                <span className="badge rounded-pill bg-success text-white">
+                  Activated
+                </span>
+              ) : (
+                <span className="badge rounded-pill bg-danger text-white">
+                  Not Activated
+                </span>
+              )}
+            </td>
+            <td>
+              {!user.isActivated ? (
+                <button
+                  type="button"
+                  className="btn btn-pill btn-info"
+                  onClick={() => dispatch(activateAccount(user._id))}
+                >
+                  Activate
                 </button>
-                <button type="button" className="btn btn-pill btn-success mx-2">
-                  Edit
-                </button>
+              ) : (
                 <button
                   type="button"
                   className="btn btn-pill btn-danger"
-                  onClick={() => dispatch(deleteStudent(_id))}
+                  onClick={() => dispatch(activateAccount(user._id))}
                 >
-                  Delete
+                  DeActivate
                 </button>
-              </td>
-            </tr>
-          )
-        )}
+              )}
+              <button type="button" className="btn btn-pill btn-primary ml-2">
+                View
+              </button>
+              <button
+                type="button"
+                className="btn btn-pill btn-success mx-2"
+                onClick={() =>
+                  history.push({
+                    pathname: `/students/edit/${user._id}`,
+                    state: user,
+                  })
+                }
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="btn btn-pill btn-danger"
+                onClick={() => dispatch(deleteStudent(user._id))}
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

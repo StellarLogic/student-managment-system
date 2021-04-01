@@ -2,7 +2,7 @@ const { BAD_REQUEST } = require("http-status");
 
 exports.roleCheck = {
   isAdmin: async (req, res, next) => {
-    if (req.user.role !== "admin") {
+    if (req.user.role.name !== "admin") {
       return res.status(BAD_REQUEST).send({
         code: BAD_REQUEST,
         message: ["UnAuthorized"],
@@ -11,7 +11,7 @@ exports.roleCheck = {
     next();
   },
   isTeacher: async (req, res, next) => {
-    if (req.user.role !== "teacher")
+    if (req.user.role.name !== "teacher")
       return res.status(BAD_REQUEST).send({
         code: BAD_REQUEST,
         message: ["UnAuthorized"],

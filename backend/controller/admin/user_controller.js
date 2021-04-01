@@ -4,7 +4,9 @@ const moment = require("moment");
 
 // ################## GET ALL USER ##################
 exports.getAllUsers = async (req, res, next) => {
-  let users = await User.find({ role: { $ne: "admin" } }).sort("createdAt");
+  let users = await User.find({ role: { $ne: "admin" } })
+    .sort("createdAt")
+    .populate("role");
 
   if (!users)
     return res.status(BAD_REQUEST).send({
@@ -28,15 +30,15 @@ exports.getUsersByRole = async (req, res, next) => {
       message: ["Not Authorized to access Admin."],
     });
 
-  let users = await User.find({ role: type }).select("-__v");
+  let users = await User.find().select("-__v").populate("role");
 
   const formattedUser = users.map((user) => {
     const createdAt = moment(user.createdAt).format("DD-MM-YYYY");
     const updatedAt = moment(user.updatedAt).format("DD-MM-YYYY");
-
-    // return { createdAt, updatedAt };
     return { ...user.toJSON(), createdAt, updatedAt };
   });
+
+  const filteredUser = formattedUser.filter((user) => user.role.name == type);
 
   if (!users)
     return res.status(BAD_REQUEST).send({
@@ -46,7 +48,7 @@ exports.getUsersByRole = async (req, res, next) => {
 
   return res.status(OK).send({
     code: OK,
-    data: formattedUser,
+    data: filteredUser,
     message: ["List of users."],
   });
 };

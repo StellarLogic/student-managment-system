@@ -52,9 +52,11 @@ exports.signUp = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   const { username, email, password } = req.body;
 
-  let user = await User.findOne({ $or: [{ email }, { username }] }).select(
-    "+password"
-  );
+  let user = await User.findOne({
+    $or: [{ email }, { username }],
+  })
+    .populate("role", `name -_id`)
+    .select("+password");
 
   if (!user)
     return res.status(BAD_REQUEST).send({
@@ -95,7 +97,7 @@ exports.login = async (req, res, next) => {
 // ################## GET LOGGED USER ##################
 
 exports.getLoggedUser = async (req, res, next) => {
-  let user = await User.findById(req.user.id);
+  let user = await User.findById(req.user.id).populate("role", `name -_id`);
 
   if (!user)
     return res.status(BAD_REQUEST).send({

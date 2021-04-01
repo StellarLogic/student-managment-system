@@ -11,7 +11,7 @@ import {
   CForm,
   CButton,
 } from "@coreui/react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addRoles } from "src/actions/admin/roles";
 import { withRouter } from "react-router";
 
@@ -27,6 +27,12 @@ const AddRole = ({ history }) => {
     e.preventDefault();
     dispatch(addRoles(state, history));
   };
+  const name = history.location.state?.name || "";
+  useEffect(() => {
+    if (name) {
+      setstate(name);
+    }
+  }, [name]);
 
   return (
     <CContainer fluid>
@@ -44,6 +50,8 @@ const AddRole = ({ history }) => {
                         placeholder="Enter first name"
                         required
                         onChange={(e) => handleChange(e)}
+                        defaultValue={state}
+                        style={{ color: "#000" }}
                       />
                     </CFormGroup>
                   </CCol>

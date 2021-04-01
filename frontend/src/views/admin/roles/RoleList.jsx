@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { getAllRoles, deleteRoles } from "src/actions/admin/roles";
 import Loader from "src/views/common/Loader/Loader";
 
 const RoleList = ({ roles, loading }) => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
     dispatch(getAllRoles);
   }, []);
 
-  console.log("roles :>> ", roles);
   if (loading) return <Loader />;
   return (
     <table className="table text-center">
@@ -29,7 +29,16 @@ const RoleList = ({ roles, loading }) => {
             <td>{name}</td>
             <td>{createdAt}</td>
             <td>
-              <button type="button" className="btn btn-pill btn-success mx-2">
+              <button
+                type="button"
+                className="btn btn-pill btn-success mx-2"
+                onClick={() =>
+                  history.push({
+                    pathname: `/roles/edit/${_id}`,
+                    state: { name },
+                  })
+                }
+              >
                 Edit
               </button>
               <button

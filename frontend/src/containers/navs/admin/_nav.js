@@ -59,6 +59,11 @@ const adminNav = [
         name: "Students",
         to: "/students/list",
       },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Add Student",
+        to: "/students/add",
+      },
     ],
   },
 ];

@@ -26,6 +26,7 @@ export const loadUser = async (dispatch) => {
     setAuthToken(localStorage.token);
     try {
       const res = await Axios.get("/user");
+
       dispatch({
         type: constants.LOAD_USER,
         payload: res.data,

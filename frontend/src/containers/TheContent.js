@@ -15,8 +15,12 @@ const loading = (
   </div>
 );
 
-const TheContent = ({ role }) => {
+const TheContent = ({ user }) => {
   const [routes, setroutes] = useState([]);
+
+  const {
+    role: { name: role },
+  } = user;
 
   useEffect(() => {
     if (role === "admin") {
@@ -61,7 +65,7 @@ const TheContent = ({ role }) => {
 };
 
 const mapStateToProps = (state) => ({
-  role: state.auth.user.role,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(React.memo(TheContent));

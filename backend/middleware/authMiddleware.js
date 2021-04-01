@@ -12,7 +12,10 @@ exports.authMiddleware = async (req, res, next) => {
   let token = req.header("x-auth-token").split(" ")[1];
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  const user = await User.findById(decoded.id);
+  const user = await User.findById(decoded.id).populate("role", [
+    "name",
+    "_id",
+  ]);
 
   if (!user)
     return res.status(BAD_REQUEST).send({

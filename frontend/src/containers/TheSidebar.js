@@ -19,11 +19,13 @@ import adminNav from "./navs/admin/_nav";
 import teacherNav from "./navs/teacher/_nav";
 import studentNav from "./navs/student/_nav";
 
-const TheSidebar = ({ role }) => {
+const TheSidebar = ({ user }) => {
   const [navigation, setnavigation] = useState([]);
   const dispatch = useDispatch();
   const show = useSelector((state) => state.changeState.sidebarShow);
-
+  const {
+    role: { name: role },
+  } = user;
   useEffect(() => {
     if (role === "admin") {
       setnavigation(adminNav);
@@ -69,7 +71,7 @@ const TheSidebar = ({ role }) => {
 };
 
 const mapStateToProps = (state) => ({
-  role: state.auth.user.role,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(React.memo(TheSidebar));

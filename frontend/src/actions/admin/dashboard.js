@@ -5,13 +5,24 @@ import Axios from "src/utils/Axios";
 export const getDashboardDetails = async (dispatch) => {
   try {
     const res = await Axios.get("/admin/dashboard");
-    dispatch({
-      type: adminConstants.GET_DASHBOARD,
-      payload: {
-        loading: false,
-        data: res.data.data,
-      },
-    });
+
+    if (res.data.data) {
+      dispatch({
+        type: adminConstants.GET_DASHBOARD,
+        payload: {
+          loading: false,
+          data: res.data.data,
+        },
+      });
+    } else {
+      dispatch({
+        type: adminConstants.GET_DASHBOARD,
+        payload: {
+          loading: true,
+          data: {},
+        },
+      });
+    }
     // res.data.message.map((msg) => toastify(msg, "success"));
   } catch (error) {
     console.log(error);

@@ -27,9 +27,8 @@ const userSchema = mongoose.Schema(
       select: false,
     },
     role: {
-      type: String,
-      enum: ["student", "teacher", "admin"],
-      default: "student",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "role",
     },
     isActivated: {
       type: Boolean,

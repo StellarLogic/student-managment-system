@@ -7,8 +7,12 @@ const { User } = require("../../model/User");
 exports.getAdminDashboard = async (req, res, next) => {
   let semester = await Semester.find();
   let branch = await Branch.find();
-  let teachers = await User.find({ role: "teacher" }).sort("createdAt");
-  let students = await User.find({ role: "student" }).sort("createdAt");
+  let users = await User.find().populate("role");
+
+  let teachers = users.filter((user) => user.role.name == "teacher");
+  let students = users.filter((user) => user.role.name == "student");
+
+  // let students = await User.find({ role: "student" }).sort("createdAt");
 
   return res.status(OK).send({
     code: OK,

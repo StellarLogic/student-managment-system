@@ -7,9 +7,11 @@ import {
   activateAccount,
   deleteTeacher,
 } from "src/actions/admin/teachers";
+import { useHistory } from "react-router";
 
 const AllTeachers = ({ loading, teachers }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getAllTeachers);
@@ -32,31 +34,23 @@ const AllTeachers = ({ loading, teachers }) => {
         </tr>
       </thead>
       <tbody>
-        {teachers.map(
-          (
-            {
-              _id,
-              firstname,
-              lastname,
-              username,
-              email,
-              createdAt,
-              updatedAt,
-              isActivated,
-            },
-            index
-          ) => (
-            <tr key={_id}>
+        {teachers.map((user, index) => {
+          console.log(user);
+          {
+            /* return null; */
+          }
+          return (
+            <tr key={user._id}>
               <th scope="row">{index + 1}</th>
               <td>
-                {firstname} {lastname}
+                {user.firstname} {user.lastname}
               </td>
-              <td>{username}</td>
-              <td>{email}</td>
-              <td>{createdAt}</td>
-              <td>{updatedAt}</td>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>{user.createdAt}</td>
+              <td>{user.updatedAt}</td>
               <td>
-                {isActivated ? (
+                {user.isActivated ? (
                   <span className="badge rounded-pill bg-success text-white">
                     Activated
                   </span>
@@ -67,11 +61,11 @@ const AllTeachers = ({ loading, teachers }) => {
                 )}
               </td>
               <td>
-                {!isActivated ? (
+                {!user.isActivated ? (
                   <button
                     type="button"
                     className="btn btn-pill btn-info"
-                    onClick={() => dispatch(activateAccount(_id))}
+                    onClick={() => dispatch(activateAccount(user._id))}
                   >
                     Activate
                   </button>
@@ -79,7 +73,7 @@ const AllTeachers = ({ loading, teachers }) => {
                   <button
                     type="button"
                     className="btn btn-pill btn-danger"
-                    onClick={() => dispatch(activateAccount(_id))}
+                    onClick={() => dispatch(activateAccount(user._id))}
                   >
                     DeActivate
                   </button>
@@ -87,20 +81,29 @@ const AllTeachers = ({ loading, teachers }) => {
                 <button type="button" className="btn btn-pill btn-primary ml-2">
                   View
                 </button>
-                <button type="button" className="btn btn-pill btn-success mx-2">
+                <button
+                  type="button"
+                  className="btn btn-pill btn-success mx-2"
+                  onClick={() =>
+                    history.push({
+                      pathname: `/teachers/edit/${user._id}`,
+                      state: user,
+                    })
+                  }
+                >
                   Edit
                 </button>
                 <button
                   type="button"
                   className="btn btn-pill btn-danger"
-                  onClick={() => dispatch(deleteTeacher(_id))}
+                  onClick={() => dispatch(deleteTeacher(user._id))}
                 >
                   Delete
                 </button>
               </td>
             </tr>
-          )
-        )}
+          );
+        })}
       </tbody>
     </table>
   );
