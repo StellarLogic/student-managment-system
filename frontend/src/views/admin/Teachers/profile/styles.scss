@@ -1,0 +1,110 @@
+.profile {
+  .sidebar {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    .avatar-wrapper {
+      position: relative;
+      .avatar {
+        border-radius: 10px 10px 0 0;
+      }
+
+      .edit {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        height: 35px;
+        width: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 50%;
+        text-decoration: none;
+        border: 1px solid #fff;
+
+        .icon {
+          font-size: 18px;
+          color: #39f;
+        }
+
+        &:hover {
+          background: #39f;
+          .icon {
+            color: #fff;
+          }
+        }
+      }
+    }
+    .bottom {
+      padding: 10px;
+
+      .name {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .role {
+        font-size: 16px;
+      }
+      .list {
+        padding-left: 0;
+        margin-bottom: 0;
+
+        li {
+          margin-bottom: 15px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+
+          .icon {
+            margin-right: 7px;
+            font-size: 16px;
+            line-height: 22px;
+          }
+        }
+      }
+    }
+  }
+
+  .main {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+
+    .banner-wrapper {
+      position: relative;
+      .banner {
+        height: 450px;
+        object-fit: cover;
+        border-radius: 10px 10px 0 0;
+        width: 100%;
+      }
+      .delete-profile {
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        height: 35px;
+        width: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 50%;
+        text-decoration: none;
+        border: 1px solid #fff;
+        cursor: pointer;
+
+        &:hover {
+          background: #39f;
+
+          color: #fff;
+        }
+      }
+    }
+  }
+}

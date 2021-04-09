@@ -14,10 +14,12 @@ export const login = (data) => async (dispatch) => {
     res.data.message.map((msg) => toastify(msg, "success"));
   } catch (error) {
     console.log(error);
-    error.response.data.message.map((msg) => toastify(msg, "err"));
-    dispatch({
-      type: constants.LOGIN_FAIL,
-    });
+    if (error.response) {
+      error.response.data.message.map((msg) => toastify(msg, "err"));
+      dispatch({
+        type: constants.LOGIN_FAIL,
+      });
+    }
   }
 };
 // ################# LOAD USER ########################

@@ -14,4 +14,11 @@ router.use(
   require("./api/admin/index")
 );
 
+router.use("*", async (req, res) => {
+  res.status(500).send({
+    code: 500,
+    message: [`Route no found`],
+  });
+});
+
 module.exports = router;

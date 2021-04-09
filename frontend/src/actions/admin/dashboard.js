@@ -1,11 +1,11 @@
 import { adminConstants } from "src/constants";
 import { toastify } from "src/utils/toatify";
 import Axios from "src/utils/Axios";
+import { profile } from "src/data";
 
 export const getDashboardDetails = async (dispatch) => {
   try {
     const res = await Axios.get("/admin/dashboard");
-
     if (res.data.data) {
       dispatch({
         type: adminConstants.GET_DASHBOARD,

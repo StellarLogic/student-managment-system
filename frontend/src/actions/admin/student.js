@@ -16,14 +16,16 @@ export const getAllStudents = async (dispatch) => {
     // res.data.message.map((msg) => toastify(msg, "success"));
   } catch (error) {
     console.log(error);
-    error.response.data.message.map((msg) => toastify(msg, "err"));
-    dispatch({
-      type: adminConstants.GET_STUDENTS,
-      payload: {
-        loading: false,
-        data: {},
-      },
-    });
+    if (error.response) {
+      error.response.data.message.map((msg) => toastify(msg, "err"));
+      dispatch({
+        type: adminConstants.GET_STUDENTS,
+        payload: {
+          loading: false,
+          data: {},
+        },
+      });
+    }
   }
 };
 

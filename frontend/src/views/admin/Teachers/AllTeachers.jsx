@@ -35,10 +35,6 @@ const AllTeachers = ({ loading, teachers }) => {
       </thead>
       <tbody>
         {teachers.map((user, index) => {
-          console.log(user);
-          {
-            /* return null; */
-          }
           return (
             <tr key={user._id}>
               <th scope="row">{index + 1}</th>
@@ -78,7 +74,11 @@ const AllTeachers = ({ loading, teachers }) => {
                     DeActivate
                   </button>
                 )}
-                <button type="button" className="btn btn-pill btn-primary ml-2">
+                <button
+                  type="button"
+                  className="btn btn-pill btn-primary ml-2"
+                  onClick={() => history.push(`/teacher/profile/${user._id}`)}
+                >
                   View
                 </button>
                 <button

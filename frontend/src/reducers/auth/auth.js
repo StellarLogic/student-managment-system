@@ -11,6 +11,7 @@ const auth = (state = initialState, { type, payload }) => {
   switch (type) {
     case constants.LOGIN_SUCCESS:
       localStorage.setItem("token", payload.token);
+      window.location.reload();
       return {
         ...state,
         token: payload.token,

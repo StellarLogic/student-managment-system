@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/akdenied/student-managment-system#readme",
   "dependencies": {
-    "concurrently": "^6.0.0"
+    "@coreui/icons": "^2.0.1",
+    "concurrently": "^6.0.0",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "node-sass": "^5.0.0"

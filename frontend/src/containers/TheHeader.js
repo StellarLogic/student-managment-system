@@ -29,7 +29,9 @@ import {
 const TheHeader = () => {
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.changeState.sidebarShow);
-  const role = useSelector((state) => state.auth.user.role);
+  const {
+    role: { name: role },
+  } = useSelector((state) => state.auth.user);
   const [routes, setroutes] = useState([]);
 
   const toggleSidebar = () => {

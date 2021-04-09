@@ -18,12 +18,21 @@ const {
   getAllSubject,
 } = require("../../../controller/admin/subject_controller");
 const {
+  addTeacherProfile,
+  getSingleTeacherProfile,
+  getAllTeacherProfile,
+  updateTeacherProfile,
+  deleteSingleTeacherProfile,
+} = require("../../../controller/admin/teacher_controller");
+const {
   getUsersByRole,
   getAllUsers,
   activateUser,
   deleteuser,
+  updateUser,
 } = require("../../../controller/admin/user_controller");
 const router = express.Router();
+const upload = require("../../../middleware/uploadImage");
 
 // ################## DASHBOARD ROUTE ##################
 router.get("/dashboard", getAdminDashboard);
@@ -33,6 +42,40 @@ router.get("/users/role", getUsersByRole);
 router.get("/users", getAllUsers);
 router.put("/user/activate/:id", activateUser);
 router.delete("/user/delete/:id", deleteuser);
+router.put("/user/:id", updateUser);
+
+// ################## USER PROFILE ROUTE ##################
+router.post(
+  "/user/profile/:id",
+  upload.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+    {
+      name: "banner",
+      maxCount: 1,
+    },
+  ]),
+  addTeacherProfile
+);
+router.put(
+  "/user/profile/:id",
+  upload.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+    {
+      name: "banner",
+      maxCount: 1,
+    },
+  ]),
+  updateTeacherProfile
+);
+router.get("/user/profile/:id", getSingleTeacherProfile);
+router.get("/user/profile", getAllTeacherProfile);
+router.delete("/user/profile/:id", deleteSingleTeacherProfile);
 
 // ################## BRANCH ROUTE ##################
 router.get("/branch", getAllBranch);

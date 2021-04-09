@@ -14,20 +14,23 @@ import {
 } from "@coreui/react";
 import { connect, useDispatch } from "react-redux";
 import { getAllRoles } from "src/actions/admin/roles";
-import { addUser } from "src/actions/admin/user";
+import { addUser, updateUser } from "src/actions/admin/user";
 import { useHistory } from "react-router";
 
 const AddUser = ({ loadingRoles, roles }) => {
   const [formData, setformData] = useState({});
+  const [role, setRole] = useState(null);
+
   const dispatch = useDispatch();
+  const history = useHistory();
   const {
     location: { state: userState },
-  } = useHistory();
+  } = history;
 
   useEffect(() => {
     dispatch(getAllRoles);
     if (userState) {
-      const { firstname, lastname, username, email } = userState;
+      const { firstname, lastname, username, email, _id } = userState;
 
       setformData({ firstname, lastname, username, email });
     }
@@ -37,12 +40,22 @@ const AddUser = ({ loadingRoles, roles }) => {
     setformData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addUser(formData));
+  const handleRole = (e) => {
+    const index = e.nativeEvent.target.selectedIndex;
+    const text = e.nativeEvent.target[index].text;
+    setRole(text);
   };
 
-  console.log("formData :>> ", formData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (userState) {
+      return dispatch(updateUser(userState._id, formData, role, history));
+    }
+    dispatch(addUser(formData, role, history));
+  };
+
+  console.log("role :>> ", formData);
+
   return (
     <CContainer fluid>
       <CForm onSubmit={handleSubmit}>
@@ -121,7 +134,10 @@ const AddUser = ({ loadingRoles, roles }) => {
                         custom
                         name="role"
                         id="role"
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          handleChange(e);
+                          handleRole(e);
+                        }}
                       >
                         {!loadingRoles &&
                           roles.map(({ _id, name }) => {
